@@ -5,6 +5,8 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.project.util.Time;
 
+import java.util.Objects;
+
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -18,7 +20,6 @@ public class Window {
     private long glfwWindow;
 
     public float r,g,b,a;
-    private boolean fadeToBlack = false;
     private static Window window = null;
 
     private static Scene currentScene;
@@ -67,10 +68,10 @@ public class Window {
 
         // Terminate GLFW and free the error callback
         glfwTerminate();
-        glfwSetErrorCallback(null).free();
+        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
     }
     public void init(){
-        // Setup an error callback. The default implementation
+        // Se tup an error callback. The default implementation
         // will print the error message in System.err.
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -111,11 +112,11 @@ public class Window {
     }
     public void loop(){
         float beginTime = Time.getTime();
-        float endTime = Time.getTime();
+        float endTime;
         float dt = -1.0f;
 
         while (!glfwWindowShouldClose(glfwWindow)){
-            //Poll evenets
+            //Poll events
             glfwPollEvents();
 
             glClearColor(r,g,b,a);
